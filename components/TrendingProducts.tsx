@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Star } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface ProductProps {
   image: string;
@@ -11,14 +15,14 @@ interface ProductProps {
 
 const ProductCard = ({ image, name, type, price, rating }: ProductProps) => (
   <div className="flex flex-col group cursor-pointer">
-    <div className="relative overflow-hidden mb-4 rounded-lg bg-gray-100 aspect-[4/5]">
+    <div className="relative overflow-hidden mb-4 rounded-lg bg-stone-100 aspect-[4/5]">
       <img 
         src={image} 
         alt={name} 
         className="w-full h-full object-cover object-center transform group-hover:scale-110 transition-transform duration-500" 
       />
       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
-      <button className="absolute bottom-4 left-1/2 -translate-x-1/2 translate-y-full group-hover:translate-y-0 bg-white text-gray-900 px-6 py-2 rounded-full font-medium shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">
+      <button className="absolute bottom-4 left-1/2 -translate-x-1/2 translate-y-full group-hover:translate-y-0 bg-white text-stone-900 px-6 py-2 rounded-full font-medium shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">
         Add to Cart
       </button>
     </div>
@@ -29,18 +33,46 @@ const ProductCard = ({ image, name, type, price, rating }: ProductProps) => (
             key={i} 
             size={14} 
             fill={i < rating ? "currentColor" : "none"} 
-            className={i < rating ? "text-yellow-400" : "text-gray-300"}
+            className={i < rating ? "text-yellow-400" : "text-stone-300"}
           />
         ))}
       </div>
-      <h3 className="text-xl font-bold text-gray-900 mb-1 font-serif">{name}</h3>
-      <p className="text-gray-500 text-sm mb-2">{type}</p>
-      <p className="text-green-700 font-semibold text-lg">${price}</p>
+      <h3 className="text-xl font-bold text-stone-900 mb-1 font-serif">{name}</h3>
+      <p className="text-stone-500 text-sm mb-2">{type}</p>
+      <p className="text-lime-800 font-semibold text-lg">${price}</p>
     </div>
   </div>
 );
 
 export default function TrendingProducts() {
+  useLayoutEffect(() => {
+    gsap.from(".TrendingH", {
+      opacity: 0,
+      y: 90,
+      duration: 2,
+      stagger: 0.15,
+      scrollTrigger: {
+        trigger: ".TrendingH",
+        scroller: "body",
+        start: "top 80%",
+        end: "top 30%"
+      }
+    });
+
+    gsap.from(".Plants", {
+      opacity: 0,
+      y: 90,
+      duration: 2,
+      stagger: 0.15, 
+      scrollTrigger: {
+        trigger: ".Plants",
+        scroller: "body",
+        start: "top 80%",
+        end: "top 30%"
+      }
+    });
+  }, []);
+
   const products: ProductProps[] = [
     {
       name: "Kalanchoe Plant - Yellow",
@@ -68,12 +100,12 @@ export default function TrendingProducts() {
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 serif-font mb-4">Trending Products</h2>
-          <div className="w-24 h-1 bg-green-500 mx-auto rounded-full"></div>
+        <div className="TrendingH text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-stone-900 serif-font mb-4">Trending Products</h2>
+          <div className="w-24 h-1 bg-lime-700 mx-auto rounded-full"></div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+        <div className="Plants grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {products.map((product, index) => (
             <ProductCard 
               key={index} 

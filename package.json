@@ -11,7 +11,9 @@
   "dependencies": {
     "lucide-react": "^0.554.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "gsap": "^3.13.0",
+    "gsap/ScrollTrigger": "latest"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
